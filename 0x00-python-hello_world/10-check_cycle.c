@@ -18,9 +18,6 @@ int check_cycle(listint_t *list)
 		list = list->next;
 		fp = fp->next->next;
 
-		if (list != fp)
-			return (0);
-
 		if (list == fp)
 		{
 			list = sp;
