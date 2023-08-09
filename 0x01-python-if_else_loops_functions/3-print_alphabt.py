@@ -1,4 +1,4 @@
 #!/usr/bin/python3
-for ascii_letter in range(97, 123):
-    if ascii_letter != 101 and ascii_letters != 113:
-        print("{:c}".format(ascii_letters), end='')
+for ascii_char in range(ord("a"), ord("z") + 1):
+    if ascii_char != 101 and ascii_char != 113:
+        print("{}".format(chr(ascii_char)), end="")
