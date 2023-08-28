@@ -1,10 +1,15 @@
-#!/usr/bin/python3
+#!/usr/bin/pythoni3
 
 def safe_print_division(a, b):
+    result = None
+
     try:
-        result = a / b
-    except:
-        result = None
+        div = a / b
+    except Exception:
+        pass
     finally:
-        print("Inside result: {}".format(div))
-    return (result)
+        if result is None:
+            print("{}".format("Inside result: None"))
+        else:
+            print("{} {:.1f}".format("Inside result:", div))
+    return (div)
