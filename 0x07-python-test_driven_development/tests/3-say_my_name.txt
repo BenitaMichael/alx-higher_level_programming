@@ -1,0 +1,46 @@
+The ``3-say_my_name`` module
+============================
+
+This modules defines a function ``say_my_name(first_name, last_name="")``.
+
+Importing function from the module:
+
+    >>> say_my_name = __import__('3-say_my_name').say_my_name
+
+CASES:
+*Inputing first_name and last_name correctly
+
+    >>> say_my_name("Benita", "Enubiaka")
+    My name is Benita Enubiaka
+
+*Inputing first_name and last_name correctly 2
+
+    >>> say_my_name("Koliseyenum")
+    My name is Koliseyenum
+
+*Inputing None as the first_name
+
+    >>> say_my_name(None)
+    TypeError: first_name must be a string
+
+*Inputing None as the last_name
+
+    >>> say_my_name("Koliseyenum", None)
+    TypeError: last_name must be a string
+
+*Inputing an integer as the first_name
+
+    >>> say_my_name(1)
+    TypeError: first_name must be a string
+
+*Inputing an integer as the last_name
+
+    >>> say_my_name("Koliseyenum", 0)
+    TypeError: last_name must be a string
+
+*No arguments
+
+    >>> say_my_name()
+    TypeError: say_my_name() missing 1 required positional argument: 'first_name'
+
+

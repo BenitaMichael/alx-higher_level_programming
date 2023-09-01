@@ -1,0 +1,73 @@
+The ``5-text_indentation`` module
+=================================
+
+This module defines a text-indentation function ``text_indentation(text)``.
+
+
+Importing function from the module:
+
+    >>> text_indentation = __import__('5-text_indentation').text_indentation
+
+CASES:
+*Printing a word with spaces around
+
+    >>> text_indentation("    Python    ")
+    Python
+
+*Printing a word with a special character at the end
+
+    >>> text_indentation("    Budybye    .")
+    Budybye.
+    <BLANKLINE>
+
+*Checking all special characters:
+
+    >>> text_indentation(".?:")
+    .
+    <BLANKLINE>
+    ?
+    <BLANKLINE>
+    :
+    <BLANKLINE>
+
+*Printing a text with special characters
+
+    >>> text_indentation("Benita: a girl ? I think . so  ")
+    Benita:
+    <BLANKLINE>
+    a girl?
+    <BLANKLINE>
+    I think.
+    <BLANKLINE>
+    so
+
+
+*Inputing None as a text
+
+    >>> text_indentation(None)
+    TypeError: text must be a string
+
+*Inputing an interger as a text
+
+    >>> text_indentation(9)
+    TypeError: text must be a string
+
+
+*Passing an empty string
+
+    >>> text_indentation('    ')
+
+*Passing in a new line
+
+    >>> text_indentation('\n')
+    <BLANKLINE>
+
+*Passing a text with spaces and one new line
+
+    >>> text_indentation("   \n")
+    <BLANKLINE>
+
+*Passing a text with spaces and one new line 2
+
+   >>> text_indentation("   \n   ")
+   <BLANKLINE>
