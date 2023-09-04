@@ -3,7 +3,7 @@
 
 
 class Rectangle:
-    """this defines the rectangle"""
+    """this defines a rectangle"""
 
     def __init__(self, width=0, height=0):
         """Initializing this rectangle class
@@ -67,5 +67,5 @@ class Rectangle:
                 rectangle += "\n"
         return (rectangle)
 
-     def __repr__(self):
+    def __repr__(self):
         return "Rectangle({:d}, {:d})".format(self.__width, self.__height)
