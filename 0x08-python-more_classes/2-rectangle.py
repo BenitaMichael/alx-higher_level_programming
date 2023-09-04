@@ -3,7 +3,7 @@
 
 
 class Rectangle:
-    """this defines the rectangle"""
+    """this defines a rectangle"""
 
     def __init__(self, width=0, height=0):
         """Initializing this rectangle class
@@ -44,7 +44,6 @@ class Rectangle:
         if value < 0:
             raise ValueError("height must be >= 0")
         self.__height = value
-
 
     def area(self):
         """returns the area"""
