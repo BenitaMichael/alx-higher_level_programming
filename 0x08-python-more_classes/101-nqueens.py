@@ -1,112 +1,109 @@
 #!/usr/bin/python3
-"""Solution to the N Queen puzzle"""
+"""Solves the N-queens puzzle"""
 
 import sys
 
 
-def init_board(p):
+def init_board(n):
     """`n`x`n` sized chessboard with 0's."""
-    chess_board = []
-    [chess_board.append([]) for i in range(p)]
-    [row.append(' ') for i in range(p) for row in chess_board]
-    return (chess_board)
+    board = []
+    [board.append([]) for i in range(n)]
+    [row.append(' ') for i in range(n) for row in board]
+    return (board)
 
 
-def board_copy(chess_board):
-    """Return a copy of the board."""
+def board_deepcopy(chess_board):
+    """Return a deepcopy of a chessboard."""
     if isinstance(chess_board, list):
-        return list(map(board_copy, chess_board))
+        return list(map(board_deepcopy, board))
     return (chess_board)
 
 
-def get_solution(chess_board):
-    """Returns the representation of a solved chessboard
-    r: rows, c: columns
-    """
+def new_solution(chess_board):
+    """Returns the representation of a solved chessboard."""
     solution = []
-    for r in range(len(chess_board)):
-        for c in range(len(chess_board)):
-            if chess_board[r][c] == "Q":
-                solution.append([r, c])
+    for row in range(len(chess_board)):
+        for col in range(len(chess_board)):
+            if chess_board[row][col] == "Q":
+                solution.append([row, col])
                 break
     return (solution)
 
 
-def spot(chess_board, row, col):
-    """Marks out unavailable spots on a chessboard.
+def mark_out(board, row, col):
+    """Marks X on spots on a chessboard.
 
-    All spots where non-attacking queens can not move to are marked out.
+    Marks all spots where non-attacking queens.
 
     Args:
-        board (list): current chess board
+        board (list): working chessboard.
         row (int): row
-        col (int): cokumn
+        col (int): column
     """
     # Mark out all forward spots
-    for a in range(col + 1, len(chess_board)):
-        chess_board[row][a] = "x"
-    # Mark out all backwards spots
-    for a in range(col - 1, -1, -1):
-        chess_board[row][a] = "x"
-    # Mark out all spots below
-    for b in range(row + 1, len(chess_board)):
-        chess_board[b][col] = "x"
-    # Mark out all spots above
-    for b in range(row - 1, -1, -1):
-        chess_board[b][col] = "x"
-    # Mark out all spots diagonally down to the right
-    a = col + 1
-    for b in range(row + 1, len(chess_board)):
-        if a >= len(chess_board):
+    for c in range(col + 1, len(board)):
+        board[row][c] = "x"
+    # Marks out all backwards spots
+    for c in range(col - 1, -1, -1):
+        board[row][c] = "x"
+    # Marks out all spots below
+    for r in range(row + 1, len(board)):
+        board[r][col] = "x"
+    # Marks out all spots above
+    for r in range(row - 1, -1, -1):
+        board[r][col] = "x"
+    # Marks out all spots diagonally down to the right
+    c = col + 1
+    for r in range(row + 1, len(board)):
+        if c >= len(board):
             break
-        chess_board[b][a] = "x"
-        a += 1
-    # Mark out all spots diagonally up to the left
-    a = col - 1
-    for b in range(row - 1, -1, -1):
-        if a < 0:
-            break
-        chess_board[b][a]
-        a -= 1
-      # Mark out all spots diagonally up to the right
-    a = col + 1
-    for b in range(row - 1, -1, -1):
-        if a >= len(chess_board):
-            break
-        chess_board[b][a] = "x"
+        board[r][c] = "x"
         c += 1
-    # Mark out all spots diagonally down to the left
-    a = col - 1
-    for b in range(row + 1, len(chess_board)):
-        if a < 0:
+    # Marks out all spots diagonally up to the left
+    c = col - 1
+    for r in range(row - 1, -1, -1):
+        if c < 0:
             break
-        chess_board[b][a] = "x"
+        board[r][c]
         c -= 1
-   
+    # Marks out all spots diagonally up to the right
+    c = col + 1
+    for r in range(row - 1, -1, -1):
+        if c >= len(board):
+            break
+        board[r][c] = "x"
+        c += 1
+    # Marks out all spots diagonally down to the left
+    c = col - 1
+    for r in range(row + 1, len(board)):
+        if c < 0:
+            break
+        board[r][c] = "x"
+        c -= 1
 
 
-def solve_in_repeat(chess_board, row, queen_piece, solution):
-    """Solves athe N-queens puzzle.
+def recursive_solution(chess_board, row, queens, solution):
+    """Recursively solve anthe puzzle.
 
     Args:
-        chess_board (list): chessboard.
-        row (int): working row.
-        queen_piece (int): number of queens on the board.
-        solutions (list): solutions.
+        board (list):current working chessboard.
+        row (int): row.
+        queens (int): number of placed queens.
+        solution (list): new solution
     Returns:
-        solution to the puzzle
+        solution
     """
-    if queen_piece == len(chess_board):
-        solution.append(get_solution(chess_board))
+    if queens == len(chess_board):
+        solution.append(new_solution(chess_board))
         return (solution)
 
-    for x in range(len(chess_board)):
-        if chess_board[row][x] == " ":
-            temp_board = board_copy(chess_board)
-            temp_board[row][x] = "Q"
-            spot(temp_board, row, x)
-            solution = solve_in_repeat(temp_board, row + 1,
-                                        queen_piece + 1, solution)
+    for c in range(len(chess_board)):
+        if chess_board[row][c] == " ":
+            temp_board = board_deepcopy(chess_board)
+            temp_board[row][c] = "Q"
+            mark_out(tmp_board, row, c)
+            solution = recursive_solution(temp_board, row + 1,
+                                        queens + 1, solution)
 
     return (solution)
 
@@ -116,13 +113,13 @@ if __name__ == "__main__":
         print("Usage: nqueens N")
         sys.exit(1)
     if sys.argv[1].isdigit() is False:
-        print("Must be a number")
+        print("N must be a number")
         sys.exit(1)
     if int(sys.argv[1]) < 4:
-        print("Must be at least 4")
+        print("N must be at least 4")
         sys.exit(1)
 
     chess_board = init_board(int(sys.argv[1]))
-    solution = solve_in_repeat(chess_board, 0, 0, [])
-    for i in solution:
-        print(i)
+    solution = recursive_solution(chess_board, 0, 0, [])
+    for sol in solution:
+        print(sol)
