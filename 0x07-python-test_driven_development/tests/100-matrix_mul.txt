@@ -85,6 +85,20 @@ Multiplying two matrices 2
     >>> matrix_mul()
     TypeError: matrix_mul() missing 2 required positional arguments: 'm_a' and 'm_b'
 
+*Missing one argument
+
+    >>> matrix_mul([[5, 9]])
+    Traceback (most recent call last):
+    	            ...
+    TypeError: lazy_matrix_mul() missing 1 required positional argument: 'm_b'
+
+*Missing arguments
+
+    >>> matrix_mul()
+    Traceback (most recent call last):
+    	            ...
+    TypeError: lazy_matrix_mul() missing 2 required positional arguments: 'm_a' and 'm_b'
+
 *Multiplying two matrices 3
 
     >>> list1 = [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
@@ -98,3 +112,10 @@ Multiplying two matrices 2
 
     >>> matrix_mul([[1, 5, 7]], [[3], [5], [8]])
     array([[84]])
+
+*Passing two matrix that can't be multiplied
+
+    >>> matrix_mul([[1, 2, 3], [7, 5, 2], [1, 0, 2]], [[9, 3], [6, 9]])
+    Traceback (most recent call last):
+    	      ...
+    ValueError: shapes (3,3) and (2,2) not aligned: 3 (dim 1) != 2 (dim 0)
