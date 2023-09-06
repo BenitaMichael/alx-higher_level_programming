@@ -3,9 +3,8 @@
 #include <string.h>
 
 /**
- * print_python_string - function that prints Python strings.
+ * print_python_string - Prints python string information
  * @p: Python Object
- * Return: Nothing (void)
  */
 
 void print_python_string(PyObject *p)
@@ -14,12 +13,11 @@ void print_python_string(PyObject *p)
 	PyObject *str, *repr;
 
 	(void)repr;
-
 	printf("[.] string object info\n");
 
 	if (strcmp(p->ob_type->tp_name, "str"))
 	{
-		printf(" [ERROR] Invalid string object\n");
+		printf("  [ERROR] Invalid String Object\n");
 		return;
 	}
 
