@@ -1,33 +1,28 @@
 #!/usr/bin/python3
-"""Adds a city and its associated state"""
+'''Adds a State object and one of its City object children to a database.
+'''
 import sys
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from relationship_state import State
-from relationship_city import Base, City
+from sqlalchemy.orm import sessionmaker, relationship
 
-if __name__ == "__main__":
-    # Create the SQLAlchemy engine
-    engine = create_engine("mysql+mysqldb://{}:{}@localhost:3306/{}"
-                           .format(sys.argv[1], sys.argv[2], sys.argv[3]),
-                           pool_pre_ping=True)
+from relationship_state import Base, State
+from relationship_city import City
 
-    # Create the database tables
-    Base.metadata.create_all(engine)
 
-    # Create factory session
-    Session = sessionmaker(bind=engine)
+if __name__ == '__main__':
+    if len(sys.argv) >= 4:
+        user = sys.argv[1]
+        pword = sys.argv[2]
+        db_name = sys.argv[3]
+        DATABASE_URL = 'mysql://{}:{}@localhost:3306/{}'.format(
+            user, pword, db_name
+        )
+        engine = create_engine(DATABASE_URL)
+        Base.metadata.create_all(engine)
+        session = sessionmaker(bind=engine)()
+        new_state = State(name='California')
+        new_city = City(name='San Francisco')
+        new_state.cities.append(new_city)
+        session.add(new_state)
+        session.commit()
 
-    # Create object session
-    session = Session()
-
-    # Create new city and its associated state
-    state = State(name="California")
-    city = City(name="San Francisco", state=state)
-
-    # Add the new city and associated state to the session
-    session.add(state)
-    session.add(city)
-
-    # Committing session to effect changes in database
-    session.commit()
